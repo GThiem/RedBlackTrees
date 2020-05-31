@@ -16,21 +16,11 @@ import frame.TreeNode.NodeColor;
 public class RedBlackTree {
 	
 	private TreeNode _root;
-	private TreeNode _nil;
-	
-	//????????????????
-	private TreeNode sent;
+	private TreeNode _nil;	
 	
 	public RedBlackTree() {
 		_nil = new TreeNode();
-		_root = _nil;
-		
-		//????????????????
-		sent = new TreeNode();
-		sent.p = sent;
-		sent.left = sent;
-		sent.right = sent;
-		_root.p = sent;
+		_root = _nil;		
 	}
 	
 	public TreeNode root() {
@@ -113,6 +103,7 @@ public class RedBlackTree {
 	 */
 	public void insert(TreeNode newNode) {
 		// TODO: Implement
+		TreeNode sent = createSentinel();
 		TreeNode x = _root;
 		TreeNode px = sent;
 		newNode.right = newNode.left = _nil;
@@ -152,6 +143,7 @@ public class RedBlackTree {
 	//left rotation
 	public void rotateLeft(TreeNode x) {
 		
+		TreeNode sent = createSentinel();		
 		TreeNode y = x.right;
 		x.right = y.left;
 		
@@ -178,6 +170,7 @@ public class RedBlackTree {
 	//right rotation
 	public void rotateRight(TreeNode x) {
 		
+		TreeNode sent = createSentinel();		
 		TreeNode y = x.left;
 		x.left = y.right;
 		
@@ -244,6 +237,16 @@ public class RedBlackTree {
 		
 		_root.color = NodeColor.BLACK;
 		
+	}
+	
+	public TreeNode createSentinel() {
+		TreeNode sent = new TreeNode();
+		sent.p = sent;
+		sent.left = sent;
+		sent.right = sent;
+		_root.p = sent;
+		
+		return sent;
 	}
 	
 }
