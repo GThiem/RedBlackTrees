@@ -289,23 +289,6 @@ public class RedBlackTree {
 		return sent;
 	}
 	
-	public void transplant(TreeNode u, TreeNode v) {		
-		if(u.p == _nil) {
-			_root = v;
-		} else {
-			if(u == u.p.left) {
-				u.p.left = v;
-			} else {
-				u.p.right = v;
-			}
-		}
-		
-		if(v != _nil) {
-			v.p = u.p;
-		}
-		
-	}
-	
 	private void fixup (TreeNode x) {
 		TreeNode w;
 		while(x != _root && x.color == NodeColor.BLACK) {
