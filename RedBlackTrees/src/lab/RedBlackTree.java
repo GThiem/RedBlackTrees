@@ -38,23 +38,39 @@ public class RedBlackTree {
 	 */
 	public TreeNode search(int key) {
         // TODO: Implement
-		return searchRec(_root, key);
+		return searchRec(_root, key); //Ruft die Rekursionsmethode auf.
 		
 	}
 	
 	//recursion for search
 	public TreeNode searchRec(TreeNode x, int key) {
 		
-		if(x == _nil) 
-			return _nil;
+		if(x == _nil) //Dies ist der Rekursionsanker: Ist der Knoten _nil, ist der Algorithmus
+					 //am Ende des Pfades angelangt, der Schlüsselwert wurde also nicht gefunden.
+			return _nil; //Gibt _nil zurück, was bedeutet, dass der Schlüsselwert im Baum nicht
+						 //existiert.
 		
-		if(x.key == key)
-			return x;
+		if(x.key == key) //Entspricht der Schlüsselwert des momentan betrachteten Knotens
+						 // dem des gesuchten Schlüsselwerts?
+			return x;	// Ja -> Gib den momentan betrachteten Knoten zurück,andernfalls fahre
+						//mit der Methode fort.
 		
-		if(x.key > key)
-			return searchRec(x.left, key);
-		else
-			return searchRec(x.right, key);
+		/*Ist der Schlüsselwert des momentan betrachteten Knotens größer dem gesuchten
+		 * Schlüsselwert, wird im linken Kind weitergesucht, andernfalls im rechten.
+		 * Dieser Aufruf erfolgt rekursiv so lange, bis entweder der gesuchte
+		 * Schlüsselwert gefunden wurde oder auf _nil verwiesen wird, also das Ende des
+		 * Pfades erreicht worden ist.
+		 * Dies funktioniert, weil Rot-Schwarz-Bäume eine echte Teilmenge der Binären
+		 * Suchbäume sind, welche ihre Werte so geordnet haben, dass der Schlüsselwert des
+		 * linken Kinds kleiner dem Schlüsselwert des momentan betrachteten Knotens
+		 * (bzw. Elternknoten) ist und der Schlüsselwert des rechten Kinds größer dem
+		 * Schlüsselwert des momentan betrachteten Knotens(bzw.Elternknoten) ist.*/
+		
+		if(x.key > key)	//Ist der Schlüsselwert des momentan betrachteten Knotens größer
+						//dem gesuchten Schlüsselwert?
+			return searchRec(x.left, key); //Ja -> Überprüfe das linke Kind
+		else			
+			return searchRec(x.right, key);//Nein -> Überprüfe das rechte Kind
 	}
 	
 	/**
@@ -69,13 +85,24 @@ public class RedBlackTree {
 	 */
 	public TreeNode minimumSubtree(TreeNode x) {
 		// TODO: Implement
-		if(x == _nil)
-			return _nil;
+		if(x == _nil) //Ist der übergebene Knoten leer, gib einen leeren Knoten zurück,
+			return _nil;// da es so keinen Knoten mit kleinstem Wert geben kann.
 		
-		while(x.left != _nil)
-			x = x.left;
+		/*Ist das linke Kind des momentan betrachteten Knotens nicht leer (also _nil), dann
+		 * weise dem Zeiger x das linke Kind zu, so dass wir nun das linke Kind des zuvor betrachteten
+		 * Knotens betrachten.
+		 * Da in einem BST der Schlüsselwert des linken Kinds eines Knotens immer kleiner
+		 * dem Schlüsselwert des Knotens selbst ist, muss man, um an den Knoten mit dem
+		 * kleinsten Wert zu gelangen, immer das linke Kind aufrufen, bis man am Ende des
+		 * Pfades angekommen ist.*/
 		
-		return x;
+		while(x.left != _nil) //Führe Inhalt der while-Schleife nur aus, wenn linkes Kind nicht leer ist
+			x = x.left; //Weise x das linke Kind von x zu, um anschließend zu überprüfen,
+						//ob x nun der letzte Knoten im linken Pfad und somit der Knoten mit
+						//dem kleinsten Schlüsselwert ist.
+		
+		return x;		//Ist die while-Schleife beendet, zeigt x auf den Knoten mit kleinstem
+						//Schlüsselwert, somit zeigt x auf den gesuchten Knoten und kann zurückgegeben werden.
 		
 	}
 	
@@ -91,13 +118,24 @@ public class RedBlackTree {
 	 */
 	public TreeNode maximumSubtree(TreeNode x) {
 		// TODO: Implement
+		//maximumSubtree funktioniert analog wie minimumSubtree, nur mit rechtem Kind:
+		
+		/*Ist der übergebene Knoten leer, gib einen leeren Knoten zurück, da es in einem
+		 * leeren Teilbaum keinen Knoten mit höchstwertigen Schlüsselwert gibt. */
 		if(x == _nil)
 			return _nil;
+		
+		/* Ist das rechte Teilkind nicht leer, so weise dem Zeiger x, welcher auf den momentan
+		 * betrachteten Knoten zeigt, nun das rechte Kind des momentan betrachteten Knotens zu.
+		 * Es wird immer das rechte Kind aufgerufen, weil in einem BST das rechte Kind eines Knotens
+		 * immer einen höherwertigen Schlüsselwert hat als sein Elternknoten.
+		 */
 		
 		while(x.right != _nil)
 			x = x.right;
 		
-		return x;
+		return x;	//Ist die while-Schleife beendet, zeigt x auf den Knoten mit höchstwertigem
+					//Schlüsselwert, somit zeigt x auf den gesuchten Knoten und kann zurückgegeben werden.
 	}
 
 	/**
