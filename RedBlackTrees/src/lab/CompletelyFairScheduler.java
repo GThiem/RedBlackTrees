@@ -3,10 +3,11 @@ package lab;
 /**
  * Aufgabe H1b)
  * 
- * Abgabe von: <name>, <name> und <name>
+ * Abgabe von: Alexander Stichling(2847229), Phuoc Pham(Matr.-Nr.: 2903082) und Gabriel Thiem(Matr.-Nr.: 2831581)
  */
 
 import frame.TreeNode;
+import frame.TreeNode.NodeColor;
 import frame.Process;
 
 public class CompletelyFairScheduler {
@@ -28,17 +29,34 @@ public class CompletelyFairScheduler {
 	 * @param windows The number of execution windows to distribute
 	 */
 	public void run(int windows) {
-		// TODO: Implement
-		throw new RuntimeException("Not implemented yet!");
-	}
+        // TODO: Implement
+        while(windows >= windowMaxLength  && tree.root() != tree.nil()) {
+            TreeNode v = tree.minimum();
+            v.value.run(windowMaxLength);
+            tree.delete(v);
+            if(!v.value.finished()) {
+                TreeNode w = new TreeNode(tree.nil(), tree.nil(), tree.nil(), v.value.executionTime(), NodeColor.BLACK, v.value);
+                while(tree.search(w.key) != tree.nil()) {
+                    w.key += 1;
+                }
+                tree.insert(w);
+            } 
+            windows--;
+        }
+    }
 	
 	/**
 	 * Add a process to the Scheduler.
 	 */
 	public void add(Process process) {
-		// TODO: Implement
-		throw new RuntimeException("Not implemented yet!");
-	}
+        // TODO: Implement
+        TreeNode v = new TreeNode(tree.nil(), tree.nil(), tree.nil(), process.executionTime(), NodeColor.BLACK, process);
+        while(tree.search(v.key) != tree.nil()) {
+            v.key += 1;
+        }
+        tree.insert(v);
+        
+    }
 	
 	// DO NOT MODIFY
 	// used for the tests
